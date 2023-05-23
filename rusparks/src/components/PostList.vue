@@ -1,13 +1,12 @@
 <!--для вставления данных оп парках-->
 <template>
-  <div v-if="posts.length>0">
+  <div v-if="parks.length>0">
     <h3>Список пользователей</h3>
     <transition-group name="post-list">
       <post-item
-          v-for="post in posts"
-          :post="post"
-          :key="post.id"
-          @remove="$emit('remove',post)"
+          v-for="park in parks"
+          :park="park"
+          :key="park.id"
       />
     </transition-group>
   </div>
@@ -19,15 +18,18 @@ import PostItem from "@/components/PostItem.vue";
 export default {
   components: {PostItem},
   props:{
-    posts: Array,
-    required: true,
+    parks: {
+      park: Array,
+      required: true,
+    }
+
   }
 }
 </script>
 
 <style scoped>
 .post-list{
-  display: inline-block;
+  display: grid;
   margin-right: 10px;
 }
 .post-list-enter-active,

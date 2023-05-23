@@ -1,6 +1,7 @@
+<!--Компонент для выпадающего списка-->
 <template>
   <select :value="modelValue" @change="changeOptions">
-    <option disabled value="">Выберите из списка</option>
+    <option disabled value="">Город</option>
     <option
         v-for="option in options"
         :key="option.value"
@@ -30,5 +31,13 @@ export default {
 </script>
 
 <style scoped>
-
+select{
+  background-color: #98CD80;
+  height: 60px;
+  width: 200px;
+  border-radius: 15px;
+  border: 0;
+  font-family: "Century Gothic";
+  font-size: 20px;
+}
 </style>

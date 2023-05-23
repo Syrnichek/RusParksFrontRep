@@ -15,8 +15,10 @@ button {
   margin: 15px;
   align-self: flex-end;
   padding: 10px 15px;
-  background: none;
-  color: teal;
-  border: 1px solid teal;
+  background-color: #98CD80;
+  border-radius: 15px;
+  border: 0 #98CD80;
+  font-family: "Century Gothic";
+  font-size: 14px;
 }
 </style>

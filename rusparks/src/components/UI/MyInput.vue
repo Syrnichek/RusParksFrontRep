@@ -1,3 +1,4 @@
+<!--поиск по всей странице-->
 <template>
   <input :value="modelValue" @input="updateInput" class="input" type="text">
 </template>
@@ -18,9 +19,11 @@ export default {
 
 <style scoped>
 .input{
-  width: 100%;
+  width: 440px;
   border: solid teal;
+  border-radius: 15px;
   padding: 10px 15px;
   margin-top: 10px;
+  font-size: 16px;
 }
 </style>
