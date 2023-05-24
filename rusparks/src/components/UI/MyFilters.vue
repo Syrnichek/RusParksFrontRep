@@ -39,21 +39,33 @@ export default {
 
 <style scoped>
 .filters{
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(12,1fr);
+  align-content: start;
+  justify-content: flex-start;
   font-size: 14px;
   font-family: "Century Gothic";
-  align-items: center;
   margin-left: auto;
+  width:760px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 .block{
   align-self: center;
   margin-right: 24px;
   margin-left: auto;
+  width: 88px;
+  align-items: center;
 }
 img{
   height: 50px;
   width: 50px;
   margin-bottom: 4px;
+}
+div{
+  display: flex;
+  flex-direction: column;
 }
 </style>

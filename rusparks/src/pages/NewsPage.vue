@@ -45,17 +45,17 @@ export default {
   },
   methods: {
   },//показать окно
-    async fetchPosts(){
-      try{
-        this.isPostLoading=true;
-        const response = await axios.get('https://localhost:7110/api/parkManage/GetParksAll').then(response=>console.log(response));
-        this.parks=response.data
-      }catch (e){
-        alert('Ошибка')
-      } finally {
-        this.isPostLoading=false;
-      }//отобразить посты подгруженные с сайта
-    },
+  async fetchPosts(){
+    try{
+      this.isPostLoading=true;
+      const response = await axios.get('https://localhost:7110/api/parkManage/GetParksAll').then(response=>console.log(response));
+      this.parks=response.data
+    }catch (e){
+      alert('Ошибка')
+    } finally {
+      this.isPostLoading=false;
+    }//отобразить посты подгруженные с сайта
+  },//не используется верхний async
   mounted() {
     axios
         .get('https://localhost:7110/api/parkManage/GetParksAll')

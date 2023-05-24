@@ -9,6 +9,12 @@
     >
       {{option.name}}
     </option>
+    <option>Москва</option>
+    <option>Валдай</option>
+    <option>Санкт-Петербург</option>
+    <option>Сочи</option>
+    <option>Кисловодск</option>
+    <option>Омск</option>
   </select>
 </template>
 

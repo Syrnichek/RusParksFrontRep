@@ -14,9 +14,9 @@ export default {
 </script>
 
 <style scoped>
-*{
-}
 .app{
   padding: 20px;
+  margin-left:40px;
+  margin-right: 40px;
 }
 </style>

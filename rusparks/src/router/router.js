@@ -3,6 +3,7 @@ import MainPage from "@/pages/MainPage.vue";
 import UserPage from "@/pages/UserPage.vue";
 import AuthoPage from "@/pages/AuthoPage.vue";
 import ParkIdPage from "@/pages/ParkIdPage.vue";
+import RegistrationPage from "@/pages/RegistrationPage.vue";
 
 const routes=[
     {
@@ -18,8 +19,12 @@ const routes=[
         component: AuthoPage
     },
     {
-        path:'/:id',
+        path:'/parkid',
         component:ParkIdPage
+    },
+    {
+        path:'/registration',
+        component:RegistrationPage
     }
 ]
 const router= createRouter({

@@ -1,16 +1,19 @@
 <template>
   <div class="authorisation">
-      <h1>Авторизация</h1>
-      <div class="box">
-        <div>Логин</div>
-        <my-input style="margin-left: 30px"/>
-      </div>
-      <div class="box">
-        <div>Пароль</div>
-        <my-input style="margin-left: 20px"/>
-      </div>
-    <my-button style="width: 240px; color: white; margin-right: auto; margin-left: auto;margin-top: 60px; font-size:24px">ВОЙТИ</my-button>
-    <div @click="$router.push('/registration')" style="margin-top: 10px">РЕГИСТРАЦИЯ</div>
+    <h1>Авторизация</h1>
+    <div class="box">
+      <div>Логин</div>
+      <my-input style="margin-left: 30px"/>
+    </div>
+    <div class="box">
+      <div>Пароль</div>
+      <my-input style="margin-left: 20px"/>
+    </div>
+    <div class="box">
+      <div>Email</div>
+      <my-input style="margin-left: 35px"/>
+    </div>
+    <my-button style="width: 340px; color: white; margin-right: auto; margin-left: auto;margin-top: 60px; font-size:24px">Зарегистрироваться</my-button>
   </div>
   <!--box{
   display: inline-flex;

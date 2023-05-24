@@ -12,7 +12,6 @@ export default {
 
 <style scoped>
 button {
-  margin: 15px;
   align-self: flex-end;
   padding: 10px 15px;
   background-color: #98CD80;
@@ -20,5 +19,7 @@ button {
   border: 0 #98CD80;
   font-family: "Century Gothic";
   font-size: 14px;
+  width: 240px;
+  height: auto;
 }
 </style>
