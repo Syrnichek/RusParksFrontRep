@@ -1,0 +1,46 @@
+<!--для вставления данных оп парках-->
+<template>
+  <div v-if="parks.length>0">
+    <transition-group name="post-list">
+      <post-item
+          v-for="park in parks"
+          :park="park"
+          :key="park.parkid"/>
+    </transition-group>
+
+  </div>
+  <h2 v-else>Постов нет</h2>
+</template>
+
+<script>
+import PostItem from "@/components/ParkItem.vue";
+export default {
+  components: {PostItem},
+  props:{
+    parks: {
+      park: Array,
+      required: true,
+    }
+
+  }
+}
+</script>
+
+<style scoped>
+.post-list{
+  display: inline-flex;
+  margin-right: 10px;
+}
+.post-list-enter-active,
+.post-list-leave-active{
+  transition: all 0.4s ease;
+}
+.post-list-enter-from,
+.post-list-leave-to{
+  opacity: 0;
+  transform: translateX(30px);
+}
+.post-list-move{
+  transition: transform 0.4s ease;
+}
+</style>
