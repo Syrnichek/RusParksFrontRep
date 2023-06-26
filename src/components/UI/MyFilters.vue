@@ -1,7 +1,7 @@
 <template>
   <div class="filters">
     <div class="block">
-      <img src="@/images/Новости.svg" alt="Новости">
+      <img @click="$router.push(`/news`)" src="@/images/Новости.svg" alt="Новости">
       <div>Новости</div>
     </div>
     <div class="block">

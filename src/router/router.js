@@ -1,9 +1,10 @@
 import {createRouter, createWebHistory} from "vue-router";
 import MainPage from "@/pages/MainPage.vue";
 import UserPage from "@/pages/UserPage.vue";
-import AuthoPage from "@/pages/AuthoPage.vue";
+import AuthPage from "@/pages/AuthPage.vue";
 import ParkIdPage from "@/pages/ParkIdPage.vue";
 import RegistrationPage from "@/pages/RegistrationPage.vue";
+import NewsPage from "@/pages/NewsPage.vue";
 
 const routes=[
     {
@@ -16,7 +17,7 @@ const routes=[
     },
     {
         path:'/authorisation',
-        component: AuthoPage
+        component: AuthPage
     },
     {
         path:'/park/:parkId',
@@ -25,10 +26,14 @@ const routes=[
     {
         path:'/registration',
         component: RegistrationPage
+    },
+    {
+        path:'/news',
+        component: NewsPage
     }
 ]
 const router= createRouter({
     routes,
-    history: createWebHistory()/*здесть должно быть process*/
+    history: createWebHistory()
 })
 export default router;

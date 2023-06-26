@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="app_btns">
-      <my-select>
-      </my-select>
+      <my-select/>
       <my-button @click="$router.push('/authorisation')" class="profile">Профиль</my-button>
     </div>
     <my-filter style="margin-bottom: 40px; margin-top: 40px"></my-filter>
@@ -19,13 +18,14 @@
 
 <script>
 import PostList from "@/components/ParkList.vue";
-import MyDialog from "@/components/UI/MyDiolog.vue";
+import MyDialog from "@/components/UI/MyDialog.vue";
 import MyButton from "@/components/UI/MyButton.vue";
 import axios from "axios";
 import MySelect from "@/components/UI/MySelect.vue";
 import MyInput from "@/components/UI/MyInput.vue";
 import Navbar from "@/App.vue";
 import MyFilter from "@/components/UI/MyFilters.vue";
+
 export default {
   components:{
     MyFilter,
@@ -44,26 +44,6 @@ export default {
       isPostLoading: false,//для отображения загрузки постов
     }
   },
-
-    async fetchPosts()
-    {
-      try
-      {
-        this.isPostLoading = true;
-        const response = await axios.get('https://localhost:44326/api/parkManage/GetParksAll').then(response=>console.log(response));
-        this.parks = response.data
-      }
-
-      catch (e)
-      {
-        alert('Ошибка')
-      }
-
-      finally
-      {
-        this.isPostLoading = false;
-      }//отобразить посты подгруженные с сайта
-    },
 
   mounted() {
     axios

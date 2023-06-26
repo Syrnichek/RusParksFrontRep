@@ -1,44 +1,23 @@
 <template>
   <div class="post">
     <div class="el">
-      <div class="maintext"><strong>{{ park.parkname}}</strong></div>
-      <div>Город: {{ park.parkcity }}</div>
-      <div>Метро: {{ park.parkmetro }}</div>
+      <div class="maintext"><strong>{{ newsItem.newstitle}}</strong></div>
+      <div>Город: {{ newsItem.newstext }}</div>
     </div>
-    <!--<my-button @click="$emit('remove', post)">Удалить</my-button>-->
-    <!--<my-button @click="$router.push(`/${park.parkid}`)" :key="park.parkid">Открыть</my-button>-->
   </div>
 
 </template>
 
 <script>
 import MyButton from "@/components/UI/MyButton.vue";
-import axios from "axios";
 
 export default {
-  data(){
-  },
   components: {MyButton},
   props:{
-    park:{
-      type: Object,
-      required: true
+      newsItem:{
+        type: Object,
+        required: true
     }
-  },
-  async fetchPosts(){
-    try{
-      this.isPostLoading=true;
-      const response = await axios.get('https://localhost:7110/api/parkManage/GetParksById'+'?'+{
-        params:{
-          id: this.park.parkid
-        }
-      });
-      this.parks=response.data
-    }catch (e){
-      alert('Ошибка')
-    } finally {
-      this.isPostLoading=false;
-    }//отобразить посты подгруженные с сайта
   }
 }
 </script>

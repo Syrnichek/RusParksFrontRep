@@ -1,16 +1,12 @@
 <template>
   <div>
     <div class="app_btns">
-      <my-select>
-      </my-select>
       <my-button @click="$router.push('/authorisation')" class="profile">Профиль</my-button>
     </div>
-    <my-filter style="margin-bottom: 40px; margin-top: 40px"></my-filter>
-    <my-dialog v-model:show="dialogVisible">
-    </my-dialog>
+    <my-dialog v-model:show="dialogVisible"/>
   </div>
-  <post-list
-      :parks="parks"
+  <news-list
+      :news="news"
       v-if="!isPostLoading"
   />
   <div v-else>Идет загрузка...</div>
@@ -18,8 +14,8 @@
 </template>
 
 <script>
-import PostList from "@/components/ParkList.vue";
-import MyDialog from "@/components/UI/MyDiolog.vue";
+import NewsList from "@/components/NewsList.vue";
+import MyDialog from "@/components/UI/MyDialog.vue";
 import MyButton from "@/components/UI/MyButton.vue";
 import axios from "axios";
 import MySelect from "@/components/UI/MySelect.vue";
@@ -28,38 +24,30 @@ import Navbar from "@/App.vue";
 import MyFilter from "@/components/UI/MyFilters.vue";
 export default {
   components:{
-    MyFilter,
-    Navbar,
-    MyInput,
-    MySelect,
-    MyButton,
-    MyDialog,
-    PostList,
+      MyFilter,
+      Navbar,
+      MyInput,
+      MySelect,
+      MyButton,
+      MyDialog,
+      NewsList,
   },
-  data(){
+
+  data() {
     return{
-      parks: [ ],
+      news: [ ],
       dialogVisible: false,//для отображения окна
       isPostLoading: false,//для отображения загрузки постов
     }
   },
+
   methods: {
-  },//показать окно
-  async fetchPosts(){
-    try{
-      this.isPostLoading=true;
-      const response = await axios.get('https://localhost:7110/api/parkManage/GetParksAll').then(response=>console.log(response));
-      this.parks=response.data
-    }catch (e){
-      alert('Ошибка')
-    } finally {
-      this.isPostLoading=false;
-    }//отобразить посты подгруженные с сайта
-  },//не используется верхний async
+  },
+
   mounted() {
     axios
-        .get('https://localhost:7110/api/parkManage/GetParksAll')
-        .then(response=>this.parks=response.data);
+        .get('https://localhost:44326/api/newsManage/GetNewsAll')
+        .then(response=>this.news=response.data);
   }
 }
 </script>

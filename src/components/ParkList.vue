@@ -1,21 +1,19 @@
-<!--для вставления данных оп парках-->
 <template>
   <div v-if="parks.length>0">
     <transition-group name="post-list">
-      <post-item
+      <park-item
           v-for="park in parks"
           :park="park"
           :key="park.parkid"/>
     </transition-group>
-
   </div>
-  <h2 v-else>Постов нет</h2>
+  <h2 v-else>Парков нет</h2>
 </template>
 
 <script>
-import PostItem from "@/components/ParkItem.vue";
+import ParkItem from "@/components/ParkItem.vue";
 export default {
-  components: {PostItem},
+  components: {ParkItem},
   props:{
     parks: {
       park: Array,

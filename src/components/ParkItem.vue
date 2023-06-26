@@ -6,25 +6,22 @@
       <div>Город: {{ park.parkcity }}</div>
       <div>Метро: {{ park.parkmetro }}</div>
     </div>
-      <!--<my-button @click="$emit('remove', post)">Удалить</my-button>-->
-      <!--<my-button @click="$router.push(`/${park.parkid}`)" :key="park.parkid">Открыть</my-button>-->
   </div>
 
 </template>
 
 <script>
 import MyButton from "@/components/UI/MyButton.vue";
-import axios from "axios";
 
-export default {
-  components: {MyButton},
-
-  props:{
-    park:{
-      type: Object,
-      required: true
+export default
+{
+    components: {MyButton},
+    props:{
+      park:{
+        type: Object,
+        required: true
+      }
     }
-  }
 }
 </script>
 
