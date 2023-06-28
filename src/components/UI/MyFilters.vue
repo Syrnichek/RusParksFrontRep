@@ -5,36 +5,52 @@
       <div>Новости</div>
     </div>
     <div class="block">
-      <img src="@/images/кубики.svg" alt="Для детей">
+      <img @click="GetParksByType(1)" src="@/images/кубики.svg" alt="Для детей">
       <div>Для детей</div>
     </div>
     <div class="block">
-      <img src="@/images/знак%20фото%20зоны%202.svg" alt="Фотоместо">
+      <img @click="GetParksByType(2)"  src="@/images/знак%20фото%20зоны%202.svg" alt="Фотоместо">
       <div>Фотоместо</div>
     </div>
     <div class="block">
-      <img src="@/images/знак%20животных.svg" alt="Животные">
+      <img @click="GetParksByType(3)" src="@/images/знак%20животных.svg" alt="Животные">
       <div>Животные</div>
     </div>
     <div class="block">
-      <img src="@/images/фудкорт.svg" alt="Фудкорт">
+      <img @click="GetParksByType(4)" src="@/images/фудкорт.svg" alt="Фудкорт">
       <div>Фудкорт</div>
     </div>
     <div class="block">
-      <img src="@/images/знак%20барбекю.svg" alt="Мангал">
+      <img @click="GetParksByType(5)" src="@/images/знак%20барбекю.svg" alt="Мангал">
       <div>Мангал</div>
     </div>
     <div class="block">
-      <img src="@/images/Дерево.svg" alt="Отдых">
+      <img @click="GetParksByType(6)" src="@/images/Дерево.svg" alt="Отдых">
       <div>Отдых</div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name:'my-filter',
+    props:{
+        parks: {
+            park: Array,
+            required: true,
+        }
+    },
+
+    name:'my-filter',
+
+    methods: {
+        GetParksByType(id){
+            this.$emit("onChangeParkType", id)
+        }
+    }
 }
+
 </script>
 
 <style scoped>

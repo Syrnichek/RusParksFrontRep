@@ -4,12 +4,15 @@
       <my-select/>
       <my-button @click="$router.push('/authorisation')" class="profile">Профиль</my-button>
     </div>
-    <my-filter style="margin-bottom: 40px; margin-top: 40px"></my-filter>
-    <my-dialog v-model:show="dialogVisible">
-    </my-dialog>
+    <my-filter :parks="parks"
+               @onChangeParkType="selectedParkId=$event"
+               style="margin-bottom: 40px;
+               margin-top: 40px"
+    />
+    <my-dialog v-model:show="dialogVisible"/>
   </div>
-  <post-list
-      :parks="parks"
+  <park-list
+      :parks="filteredParks"
       v-if="!isPostLoading"
   />
   <div v-else>Идет загрузка...</div>
@@ -17,7 +20,7 @@
 </template>
 
 <script>
-import PostList from "@/components/ParkList.vue";
+import ParkList from "@/components/ParkList.vue";
 import MyDialog from "@/components/UI/MyDialog.vue";
 import MyButton from "@/components/UI/MyButton.vue";
 import axios from "axios";
@@ -27,29 +30,39 @@ import Navbar from "@/App.vue";
 import MyFilter from "@/components/UI/MyFilters.vue";
 
 export default {
-  components:{
-    MyFilter,
-    Navbar,
-    MyInput,
-    MySelect,
-    MyButton,
-    MyDialog,
-    PostList,
-  },
+    components:{
+        MyFilter,
+        Navbar,
+        MyInput,
+        MySelect,
+        MyButton,
+        MyDialog,
+        ParkList,
+    },
 
-  data(){
-    return{
-      parks: [ ],
-      dialogVisible: false,//для отображения окна
-      isPostLoading: false,//для отображения загрузки постов
+    data(){
+      return{
+        selectedParkId: null,
+        parks: [ ],
+        dialogVisible: false,//для отображения окна
+        isPostLoading: false,//для отображения загрузки постов
+      }
+    },
+
+    computed:{
+      filteredParks(){
+        if(!this.selectedParkId) {
+          return this.parks
+        }
+        return this.parks.filter(parks => parks.typeid.includes(this.selectedParkId))
+      }
+    },
+
+    mounted() {
+      axios
+          .get('https://localhost:44326/api/parkManage/GetParksAll')
+          .then(response => this.parks = response.data);
     }
-  },
-
-  mounted() {
-    axios
-        .get('https://localhost:44326/api/parkManage/GetParksAll')
-        .then(response => this.parks = response.data);
-  }
 }
 </script>
 

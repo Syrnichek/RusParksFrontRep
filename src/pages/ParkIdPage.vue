@@ -27,12 +27,9 @@ export default {
         }
     },
 
-    mounted()
-    {
+    mounted() {
         axios
-            .get('https://localhost:44326/api/parkManage/GetParksById',{
-                params: this.$route.params
-            })
+            .get('https://localhost:44326/api/parkManage/GetParksById', {params: this.$route.params})
             .then(response=>this.park=response.data);
     }
 }
