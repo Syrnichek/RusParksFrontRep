@@ -1,15 +1,7 @@
-<!--Компонент для выпадающего списка-->
 <template>
-  <select :value="modelValue" @change="changeOptions">
+  <select :value="selectedCity" @change="GetParksByCity">
     <option disabled value="">Город</option>
-    <option
-        v-for="option in options"
-        :key="option.value"
-        :value="option.value"
-    >
-      {{option.name}}
-    </option>
-    <option>Москва</option>
+    <option value="Москва">Москва</option>
     <option>Валдай</option>
     <option>Санкт-Петербург</option>
     <option>Сочи</option>
@@ -20,18 +12,25 @@
 
 <script>
 export default {
-  name:'my-select',
-  props:{
-    modelValue: [String, Number],
-    options:{
-      type: Array,
-      default: ()=>[]
-    }
-  },
-  methods:{
-    changeOptions(event){
-      this.$emit('update:modelValue', event.target.value);
-    }
+    name:'my-select',
+
+    data(){
+        return {selectedCity: ''}
+    },
+
+    props:{
+        modelValue: [String, Number],
+        options:{
+            type: Array,
+            default: ()=>[]
+        }
+    },
+
+    methods:{
+        GetParksByCity(e){
+          console.log(e.target.value)
+          this.$emit("onChangeParkCity", this.selectedCity = e.target.value)
+        }
   }
 }
 </script>

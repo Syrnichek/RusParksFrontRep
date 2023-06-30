@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="app_btns">
-      <my-select/>
+      <my-select @onChangeParkCity="selectedParkCity=$event"/>
       <my-button @click="$router.push('/authorisation')" class="profile">Профиль</my-button>
     </div>
     <my-filter :parks="parks"
@@ -43,6 +43,7 @@ export default {
     data(){
       return{
         selectedParkId: null,
+        selectedParkCity: null,
         parks: [ ],
         dialogVisible: false,//для отображения окна
         isPostLoading: false,//для отображения загрузки постов
@@ -51,10 +52,17 @@ export default {
 
     computed:{
       filteredParks(){
-        if(!this.selectedParkId) {
-          return this.parks
+        let parks = this.parks
+
+        if(this.selectedParkId) {
+          parks = parks.filter(parks => parks.typeid.includes(this.selectedParkId))
         }
-        return this.parks.filter(parks => parks.typeid.includes(this.selectedParkId))
+
+        if(this.selectedParkCity) {
+          parks = parks.filter(parks => parks.parkcity === this.selectedParkCity)
+        }
+
+        return parks
       }
     },
 
