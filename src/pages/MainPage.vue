@@ -3,7 +3,8 @@
     Добрый день {{userLogin}}
     <div class="app_btns">
       <my-select @onChangeParkCity="selectedParkCity=$event"/>
-      <my-button v-show="!userId" @click="$router.push('/authorisation')" class="profile">Профиль</my-button>
+      <my-button v-if="!userId" @click="$router.push('/authorisation')" class="profile">Профиль</my-button>
+      <my-button v-if="userId" @click="profileExit()" class="profile">Выйти</my-button>
     </div>
     <my-filter :parks="parks"
                @onChangeParkType="selectedParkId=$event"
@@ -66,6 +67,13 @@ export default {
         }
 
         return parks
+      }
+    },
+
+    methods:{
+      profileExit(){
+        localStorage.clear()
+        location.reload()
       }
     },
 
