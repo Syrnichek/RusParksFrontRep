@@ -46,7 +46,7 @@ export default {
 
   mounted() {
     axios
-        .get('https://localhost:44326/api/newsManage/GetNewsAll')
+        .get('https://localhost:5069/api/newsManage/GetNewsAll')
         .then(response=>this.news=response.data);
   }
 }

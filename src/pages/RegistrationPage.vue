@@ -50,7 +50,7 @@ export default {
       params.append("email", this.email);
 
       await axios
-          .get('https://localhost:44326/api/userManage/UserReg', {params: params})
+          .get('https://localhost:5069/api/userManage/UserReg', {params: params})
           .then(response => this.user = response.data)
           .catch(error => this.statusCode = error.response.status)
 

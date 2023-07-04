@@ -45,6 +45,7 @@ export default {
     data(){
       return{
         userId:null,
+        userRole:null,
         userLogin:null,
         selectedParkId: null,
         selectedParkCity: null,
@@ -78,11 +79,21 @@ export default {
     },
 
     mounted() {
+      let params = new URLSearchParams();
+      params.append("userId", this.userId);
+
       this.userId = localStorage.getItem("userId")
       this.userLogin = localStorage.getItem("userLogin")
+
       axios
-          .get('https://localhost:44326/api/parkManage/GetParksAll')
+          .get('https://localhost:5069/api/parkManage/GetParksAll')
           .then(response => this.parks = response.data);
+
+
+      axios
+          .get('https://localhost:5069/api/userManage/RoleGet', {params: params})
+          .then(response => this.parks = response.data)
+          .catch(error => this.statusCode = error.response.status)
     }
 }
 </script>
