@@ -3,13 +3,16 @@
       <h1>Авторизация</h1>
       <div class="box">
         <div>Логин</div>
-        <my-input style="margin-left: 30px"/>
+        <my-input v-model="login" style="margin-left: 30px"/>
       </div>
       <div class="box">
         <div>Пароль</div>
-        <my-input style="margin-left: 20px"/>
+        <my-input v-model="password" style="margin-left: 20px"/>
       </div>
-    <my-button style="width: 240px; color: white; margin-right: auto; margin-left: auto;margin-top: 60px; font-size:24px">ВОЙТИ</my-button>
+      <div v-if="statusCode==401">
+          Не верный логин/пароль
+      </div>
+    <my-button @click="UserLogin()" style="width: 240px; color: white; margin-right: auto; margin-left: auto;margin-top: 60px; font-size:24px">ВОЙТИ</my-button>
     <div @click="$router.push('/registration')" style="margin-top: 10px">РЕГИСТРАЦИЯ</div>
   </div>
   <!--box{
@@ -24,9 +27,36 @@
 
 import MyInput from "@/components/UI/MyInput.vue";
 import MyButton from "@/components/UI/MyButton.vue";
+import axios from "axios";
 
 export default {
-  components: {MyButton, MyInput}
+    components: {MyButton, MyInput},
+
+    data(){
+        return{
+            login: null,
+            password: null,
+            userId:null,
+            statusCode:null
+        }
+    },
+
+    methods: {
+        UserLogin(){
+            let params = new URLSearchParams();
+            params.append("login",this.login);
+            params.append("password", this.password);
+
+            axios
+                .get('https://localhost:44326/api/userManage/UserLogin', {params: params})
+                .then(response=>this.userId=response.data)
+                .catch(error=>this.statusCode = error.response.status)
+
+            if(this.statusCode==401){
+                this.statusCode=null
+            }
+        }
+    }
 
 }
 </script>
