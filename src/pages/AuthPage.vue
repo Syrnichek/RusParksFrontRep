@@ -15,12 +15,6 @@
     <my-button @click="UserLogin()" style="width: 240px; color: white; margin-right: auto; margin-left: auto;margin-top: 60px; font-size:24px">ВОЙТИ</my-button>
     <div @click="$router.push('/registration')" style="margin-top: 10px">РЕГИСТРАЦИЯ</div>
   </div>
-  <!--box{
-  display: inline-flex;
-  font-size: 24px;
-  align-items: center;
-  margin-right: 24px;
-} -->
 </template>
 
 <script>
@@ -36,27 +30,29 @@ export default {
         return{
             login: null,
             password: null,
-            userId:null,
+            user:null,
             statusCode:null
         }
     },
 
     methods: {
-        UserLogin(){
+        async UserLogin() {
             let params = new URLSearchParams();
-            params.append("login",this.login);
+            params.append("login", this.login);
             params.append("password", this.password);
 
-            axios
+            await axios
                 .get('https://localhost:44326/api/userManage/UserLogin', {params: params})
-                .then(response=>this.userId=response.data)
-                .catch(error=>this.statusCode = error.response.status)
+                .then(response => this.user = response.data)
+                .catch(error => this.statusCode = error.response.status)
 
-            if(this.statusCode==401){
-                this.statusCode=null
+            if (this.user !== null) {
+                localStorage.setItem('userId', this.user.userId)
+                localStorage.setItem('userLogin', this.user.userLogin)
+                this.$router.push('/')
             }
         }
-    }
+    },
 
 }
 </script>

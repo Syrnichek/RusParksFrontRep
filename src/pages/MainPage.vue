@@ -1,8 +1,9 @@
 <template>
   <div>
+    Добрый день {{userLogin}}
     <div class="app_btns">
       <my-select @onChangeParkCity="selectedParkCity=$event"/>
-      <my-button @click="$router.push('/authorisation')" class="profile">Профиль</my-button>
+      <my-button v-show="!userId" @click="$router.push('/authorisation')" class="profile">Профиль</my-button>
     </div>
     <my-filter :parks="parks"
                @onChangeParkType="selectedParkId=$event"
@@ -42,6 +43,8 @@ export default {
 
     data(){
       return{
+        userId:null,
+        userLogin:null,
         selectedParkId: null,
         selectedParkCity: null,
         parks: [ ],
@@ -67,6 +70,8 @@ export default {
     },
 
     mounted() {
+      this.userId = localStorage.getItem("userId")
+      this.userLogin = localStorage.getItem("userLogin")
       axios
           .get('https://localhost:44326/api/parkManage/GetParksAll')
           .then(response => this.parks = response.data);
