@@ -42,7 +42,7 @@ export default {
             params.append("password", this.password);
 
             await axios
-                .get('https://localhost:5069/api/userManage/UserLogin', {params: params})
+                .get('http://localhost:44326/api/userManage/UserLogin', {params: params})
                 .then(response => this.user = response.data)
                 .catch(error => this.statusCode = error.response.status)
 

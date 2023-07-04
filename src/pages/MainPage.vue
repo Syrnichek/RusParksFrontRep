@@ -86,12 +86,12 @@ export default {
       this.userLogin = localStorage.getItem("userLogin")
 
       axios
-          .get('https://localhost:5069/api/parkManage/GetParksAll')
+          .get('http://localhost:44326/api/parkManage/GetParksAll')
           .then(response => this.parks = response.data);
 
 
       axios
-          .get('https://localhost:5069/api/userManage/RoleGet', {params: params})
+          .get('http://localhost:44326/api/userManage/RoleGet', {params: params})
           .then(response => this.parks = response.data)
           .catch(error => this.statusCode = error.response.status)
     }

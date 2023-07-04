@@ -29,7 +29,7 @@ export default {
 
     mounted() {
         axios
-            .get('https://localhost:5069/api/parkManage/GetParksById', {params: this.$route.params})
+            .get('http://localhost:44326/api/parkManage/GetParksById', {params: this.$route.params})
             .then(response=>this.park=response.data);
     }
 }
