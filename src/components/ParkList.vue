@@ -25,12 +25,12 @@ export default {
 
 <style scoped>
 .post-list{
-  display: inline-flex;
+  display: inline;
   margin-right: 10px;
 }
 .post-list-enter-active,
 .post-list-leave-active{
-  transition: all 0.4s ease;
+  transition: all 0.3s ease;
 }
 .post-list-enter-from,
 .post-list-leave-to{
@@ -38,6 +38,6 @@ export default {
   transform: translateX(30px);
 }
 .post-list-move{
-  transition: transform 0.4s ease;
+  transition: transform 0.4s ease-out;
 }
 </style>
