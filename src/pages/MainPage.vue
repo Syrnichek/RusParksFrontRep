@@ -1,18 +1,25 @@
 <template>
   <div>
     Добрый день {{userLogin}}
+
     <div class="app_btns">
       <my-select @onChangeParkCity="selectedParkCity=$event"/>
       <my-button v-if="!userId" @click="$router.push('/authorisation')" class="profile">Профиль</my-button>
       <my-button v-if="userId" @click="profileExit()" class="profile">Выйти</my-button>
     </div>
+
+    <my-button v-if="userRole==='Admin'" @click="showModal=true" class="profile" style="float:right; ">Добавить парк</my-button>
+    <add-park-modal v-if="showModal" @close="showModal=false"/>
+
     <my-filter :parks="parks"
                @onChangeParkType="selectedParkId=$event"
                style="margin-bottom: 40px;
                margin-top: 40px"
     />
     <my-dialog v-model:show="dialogVisible"/>
+
   </div>
+
   <park-list
       :parks="filteredParks"
       v-if="!isPostLoading"
@@ -30,9 +37,11 @@ import MySelect from "@/components/UI/MySelect.vue";
 import MyInput from "@/components/UI/MyInput.vue";
 import Navbar from "@/App.vue";
 import MyFilter from "@/components/UI/MyFilters.vue";
+import AddParkModal from "@/components/AddParkModal.vue";
 
 export default {
     components:{
+        AddParkModal,
         MyFilter,
         Navbar,
         MyInput,
@@ -44,8 +53,9 @@ export default {
 
     data(){
       return{
+        showModal:false,
         userId:null,
-        userRole:null,
+        userRole:'',
         userLogin:null,
         selectedParkId: null,
         selectedParkCity: null,
@@ -75,24 +85,27 @@ export default {
       profileExit(){
         localStorage.clear()
         location.reload()
+      },
+
+      parkAdd(){
+
       }
     },
 
     mounted() {
-      let params = new URLSearchParams();
-      params.append("userId", this.userId);
-
       this.userId = localStorage.getItem("userId")
       this.userLogin = localStorage.getItem("userLogin")
+
+      let params = new URLSearchParams();
+      params.append("userId", this.userId);
 
       axios
           .get('http://localhost:44326/api/parkManage/GetParksAll')
           .then(response => this.parks = response.data);
 
-
       axios
           .get('http://localhost:44326/api/userManage/RoleGet', {params: params})
-          .then(response => this.parks = response.data)
+          .then(response => this.userRole = response.data)
           .catch(error => this.statusCode = error.response.status)
     }
 }
