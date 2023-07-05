@@ -1,12 +1,12 @@
 <template>
   <select :value="selectedCity" @change="GetParksByCity">
-    <option disabled value="">Город</option>
+    <option disabled value="Город">Город</option>
     <option value="Москва">Москва</option>
-    <option>Валдай</option>
-    <option>Санкт-Петербург</option>
-    <option>Сочи</option>
-    <option>Кисловодск</option>
-    <option>Омск</option>
+    <option value="Санкт-Петербург">Санкт-Петербург</option>
+    <option value="Сочи">Сочи</option>
+    <option value="Кисловодск">Кисловодск</option>
+    <option value="Валдай">Валдай</option>
+    <option value="Омск">Омск</option>
   </select>
 </template>
 
@@ -41,8 +41,17 @@ select{
   height: 60px;
   width: 200px;
   border-radius: 15px;
-  border: 0;
+  border: 0px;
   font-family: "Century Gothic";
   font-size: 20px;
+  color: black;
+  cursor: pointer;
+}
+select:hover{
+  color: #F7F9FB;
+  background: #70A76E;
+}
+select:focus{
+  outline: 0;
 }
 </style>

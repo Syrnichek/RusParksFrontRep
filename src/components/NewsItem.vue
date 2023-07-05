@@ -1,8 +1,9 @@
 <template>
   <div class="post">
     <div class="el">
+      <img @click="$router.push(`/news/${news.newsid}`)" src="@/images/smallimages/1.jpg">
       <div class="maintext"><strong>{{ newsItem.newstitle}}</strong></div>
-      <div>Город: {{ newsItem.newstext }}</div>
+      <div>{{ newsItem.newsdate }}</div>
     </div>
   </div>
 
@@ -29,20 +30,27 @@ export default {
 .post{
   display: inline-flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   grid-template-columns: repeat(6,1fr);
-  width: 200px;
   border:1px black;
   margin-left: auto;
   margin-right: auto;
   padding-left: 20px;
+  cursor: pointer;
 }
 .el{
+  align-self: center;
+  justify-self: center;
   align-content: start;
-  width: 200px;
+  width: 420px;
   align-items: center;
-  font-family: "Century Gothic";
-  font-size: 14px;
+  font-family: "Century Gothic",serif;
+  font-size: 16px;
   margin-top: 20px;
+}
+img{
+  width: 420px;
+  height: 280px;
+  border-radius: 15px;
 }
 </style>

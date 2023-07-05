@@ -39,13 +39,14 @@ export default
   margin-left: auto;
   margin-right: auto;
   padding-left: 20px;
+  cursor: pointer;
 }
 .el{
   align-content: start;
   width: 200px;
   align-items: center;
   font-family: "Century Gothic";
-  font-size: 14px;
+  font-size: 16px;
   margin-top: 20px;
 }
 img{

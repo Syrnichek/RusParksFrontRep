@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="app_btns">
+      <my-button @click="$router.push('/')" class="profile">Парки</my-button>
       <my-button @click="$router.push('/authorisation')" class="profile">Профиль</my-button>
     </div>
     <my-dialog v-model:show="dialogVisible"/>
