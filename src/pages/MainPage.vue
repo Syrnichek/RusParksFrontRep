@@ -85,10 +85,6 @@ export default {
       profileExit(){
         localStorage.clear()
         location.reload()
-      },
-
-      parkAdd(){
-
       }
     },
 

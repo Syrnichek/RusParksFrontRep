@@ -14,7 +14,7 @@
                     <div class="modal-body">
                         <slot name="body">
                             Город парка:
-                            <my-select v-model="parkCity"/>
+                            <my-select @onChangeParkCity="parkCity=$event"/>
                         </slot>
                     </div>
 
@@ -28,20 +28,54 @@
                     <div class="modal-body">
                         <slot name="body">
                             Картинка:
-                            <my-input v-model="parkImages"
-                                      type="file"
-                                      id="avatar" name="avatar"
-                                      accept="image/png, image/jpeg"
-                                      multiple
-                                      style="width: 200px;"
+                            <input type="file"
+                                   id="avatar" name="avatar"
+                                   accept="image/png, image/jpeg"
+                                   multiple
+                                   style="width: 200px;"
+                                   ref="myFiles"
+                                   @change="logger()"
                             />
+                        </slot>
+                    </div>
+
+                    <div class="modal-body">
+                        <slot name="body">
+                            Основной текст:
+                            <my-input v-model="mainText" style="width: 200px;"/>
+                        </slot>
+                    </div>
+
+                    <div class="modal-body">
+                        <slot name="body">
+                            Информационный текст:
+                            <my-input v-model="enterInfoText" style="width: 200px;"/>
+                        </slot>
+                    </div>
+
+                    <div class="modal-body">
+                        <slot name="body">
+                            Выберите фильтры:
+                            <div>
+                                <label> Для детей </label>
+                                <input type="checkbox" name="type" value="1"/>
+                                <label> Фотоместо </label>
+                                <input type="checkbox" name="type" value="2" />
+                                <label> Животные </label>
+                                <input type="checkbox" name="type" value="3" />
+                                <label> Фудкорт </label>
+                                <input type="checkbox" name="type" value="4" />
+                                <label> Мангал </label>
+                                <input type="checkbox" name="type" value="5" />
+                                <label> Отдых </label>
+                                <input type="checkbox" name="type" value="6" />
+                            </div>
                         </slot>
                     </div>
 
                     <div class="modal-footer">
                         <slot name="footer">
-                            default footer
-                            <button class="modal-default-button" @click="logger">
+                            <button @click="parkAdd()" class="modal-default-button">
                                 OK
                             </button>
                         </slot>
@@ -55,6 +89,17 @@
 <script>
 import MyInput from "@/components/UI/MyInput.vue";
 import MySelect from "@/components/UI/MySelect.vue";
+import axios from "axios";
+
+function checkBoxValue() {
+        let array = []
+        let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+
+        for (let i = 0; i < checkboxes.length; i++) {
+            array.push(checkboxes[i].value)
+        }
+        return array
+}
 
 export default {
     name: "AddParkModal",
@@ -67,6 +112,9 @@ export default {
             parkCity: null,
             parkMetro: null,
             parkImages: [],
+            mainText:null,
+            enterInfoText:null,
+            typeId: [],
             email: '',
             user:null,
             statusCode:null
@@ -74,9 +122,28 @@ export default {
     },
     methods: {
         logger() {
+            this.parkImages = this.$refs.myFiles.files[0]
             console.log(this.parkImages)
+        },
+
+        parkAdd() {
+            let formData = new FormData();
+            formData.append('parkName', this.parkName);
+            formData.append('parkCity', this.parkCity);
+            formData.append('parkMetro', this.parkMetro);
+            formData.append('parkImages', this.parkImages);
+            formData.append('mainText', this.mainText);
+            formData.append('enterInfoText', this.enterInfoText);
+            let checkbox = checkBoxValue()
+            formData.append('typeId', checkbox);
+
+            console.log(this.parkCity)
+            console.log(checkbox)
+
+            axios.post('http://localhost:44326/api/adminManage/ParkAdd',formData)
         }
-    }
+    },
+
 }
 </script>
 

@@ -28,7 +28,6 @@ export default {
 
     methods:{
         GetParksByCity(e){
-          console.log(e.target.value)
           this.$emit("onChangeParkCity", this.selectedCity = e.target.value)
         }
   }
