@@ -7,6 +7,7 @@
     <option value="Кисловодск">Кисловодск</option>
     <option value="Валдай">Валдай</option>
     <option value="Омск">Омск</option>
+    <option value="Калининград">Калининград</option>
   </select>
 </template>
 

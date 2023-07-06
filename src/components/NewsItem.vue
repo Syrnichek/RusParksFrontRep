@@ -5,7 +5,6 @@
       <div class="maintext"><strong>{{ newsItem.newstitle}}</strong></div>
       <div>
         {{ newsItem.newsdate.slice(0,10) }}
-        {{ newsItem.newsdate.slice(11,19) }}
       </div>
     </div>
   </div>

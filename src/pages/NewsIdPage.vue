@@ -1,5 +1,8 @@
 <template>
   <div class="el">
+    <div v-for="newsData in news" :key="newsData.newsid" class="images">
+      <img v-bind:src=GetImage(newsData.newsimage)>
+    </div>
     <div v-for="newsData in news" :key="newsData.newsid">
       <h1>{{ newsData.newstitle }}</h1>
       <div>{{newsData.newsdate}}</div>
@@ -19,6 +22,12 @@ export default {
       news: [ ],
       dialogVisible: false,
       isPostLoading: false,
+    }
+  },
+  methods:{
+    GetImage(imageName){
+      let path = 'http://localhost:44326/StaticFiles/images/news/' + imageName
+      return path
     }
   },
 
