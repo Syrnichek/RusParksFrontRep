@@ -29,11 +29,11 @@
                         <slot name="body">
                             Картинка:
                             <input type="file"
-                                   id="avatar" name="avatar"
+                                   id="input" name="parkImages[]"
                                    accept="image/png, image/jpeg"
-                                   multiple
                                    style="width: 200px;"
                                    ref="myFiles"
+                                   multiple="multiple"
                                    @change="logger()"
                             />
                         </slot>
@@ -115,6 +115,7 @@ export default {
             mainText:null,
             enterInfoText:null,
             typeId: [],
+            inputFile: null,
             email: '',
             user:null,
             statusCode:null
@@ -122,24 +123,27 @@ export default {
     },
     methods: {
         logger() {
-            this.parkImages = this.$refs.myFiles.files[0]
-            console.log(this.parkImages)
+            this.parkImages = this.$refs.myFiles.files
         },
 
         parkAdd() {
             let formData = new FormData();
             let checkbox = checkBoxValue()
+            let inputFile = this.parkImages
 
             formData.append('parkName', this.parkName);
             formData.append('parkCity', this.parkCity);
             formData.append('parkMetro', this.parkMetro);
-            formData.append('mainImages', this.parkImages);
-            formData.append('imagesPath', this.parkImages.name);
+            for (let i = 0; i < inputFile.length; i++) {
+                formData.append('mainImages', inputFile[i]);
+                formData.append('imagesPath', inputFile[i].name);
+            }
             formData.append('mainText', this.mainText);
             formData.append('enterInfoText', this.enterInfoText);
             checkbox.forEach(v => formData.append('typeId',v))
 
-            console.log(checkbox)
+
+            console.log(this.parkImages)
 
             axios.post('http://localhost:44326/api/adminManage/ParkAdd', formData)
                 .then(response => response.data)
