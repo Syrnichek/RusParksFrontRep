@@ -5,6 +5,7 @@ import AuthPage from "@/pages/AuthPage.vue";
 import ParkIdPage from "@/pages/ParkIdPage.vue";
 import RegistrationPage from "@/pages/RegistrationPage.vue";
 import NewsPage from "@/pages/NewsPage.vue";
+import NewsIdPage from "@/pages/NewsIdPage.vue";
 
 const routes=[
     {
@@ -30,6 +31,10 @@ const routes=[
     {
         path:'/news',
         component: NewsPage
+    },
+    {
+        path:'/news/:newsId',
+        component: NewsIdPage
     }
 ]
 const router= createRouter({
