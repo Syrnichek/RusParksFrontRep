@@ -1,8 +1,10 @@
 <template>
   <div class="app_btns">
     <my-button @click="$router.push('/')" class="profile">Парки</my-button>
-    <my-button @click="$router.push('/authorisation')" class="profile">Профиль</my-button>
+    <my-button v-if="!userId" @click="$router.push('/authorisation')" class="profile">Профиль</my-button>
+    <my-button v-if="userId" @click="profileExit()" class="profile">Выйти</my-button>
   </div>
+  Средняя оценка: {{reviewAverage}}
   <div class="el" v-for="parkData in park" :key="parkData.parkid">
     <h1>{{ parkData.parkname }}</h1></div>
   <div class="images">
@@ -31,27 +33,113 @@
     <input type="radio" id="star-1" name="rating" value="1">
     <label for="star-1" title="Оценка «1»"></label>
   </div>
+  <div>
+    <my-input v-model="reviewText" style="width: 450px;"/>
+    <my-button  @click="ReviewAdd()" class="profile">Отзыв</my-button>
+  </div>
+  <div class="el">
+    <div v-for="reviewData in review" :key="reviewData.reviewId">
+      <div>
+        Имя пользователя:{{ reviewData.userlogin }}
+        Комментарий:{{ reviewData.reviewtext }}
+        Оценка:{{ reviewData.reviewscore }}
+        <my-button v-if="userRole==='Admin'" @click="ReviewDelete(reviewData.reviewid)" class="profile">Удалить</my-button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
 import MyButton from "@/components/UI/MyButton.vue";
+import MyInput from "@/components/UI/MyInput.vue";
+
+function radioValue() {
+  let array = []
+  let checkboxes = document.querySelectorAll('input[type=radio]:checked')
+
+  for (let i = 0; i < checkboxes.length; i++) {
+    array.push(checkboxes[i].value)
+  }
+  return array
+}
 
 export default {
-  components: {MyButton},
+  components: {MyInput, MyButton},
 
     data(){
         return{
-            park: [ ],
-            dialogVisible: false,
-            isPostLoading: false,
+          userRole:null,
+          review: [],
+          park: [],
+          userId:null,
+          reviewAverage: null,
+          reviewText:'',
+          dialogVisible: false,
+          isPostLoading: false,
         }
     },
 
+    methods:{
+      ReviewAdd(){
+        let radioVal = radioValue();
+        let params = new URLSearchParams();
+        let userId = this.userId
+        let userLogin = localStorage.getItem("userLogin")
+        let parkId = this.$route.params.parkId
+
+        params.append("parkId", parkId);
+        params.append("userId", userId);
+        params.append("userLogin", userLogin);
+        params.append("reviewScore", radioVal);
+        params.append("reviewText", this.reviewText);
+
+        axios
+            .get('http://localhost:44326/api/reviewManage/ReviewAdd', {params: params})
+            .then(response=>this.review=response.data);
+
+        location.reload()
+      },
+
+      profileExit(){
+        localStorage.clear()
+        location.reload()
+      },
+
+      ReviewDelete(reviewId){
+        let params = new URLSearchParams();
+        params.append("reviewid", reviewId);
+
+        axios
+            .get('http://localhost:44326/api/adminManage/ReviewDelete', {params: params})
+            .then(response=>this.review=response.data);
+
+        location.reload()
+      }
+    },
+
     mounted() {
+        this.userId = localStorage.getItem("userId")
+
+        let params = new URLSearchParams();
+        params.append("userId", this.userId);
+
+        axios
+            .get('http://localhost:44326/api/reviewManage/ReviewsGetAverage', {params: this.$route.params})
+            .then(response=>this.reviewAverage=response.data);
+
+        axios
+            .get('http://localhost:44326/api/reviewManage/ReviewsGetByParkId', {params: this.$route.params})
+            .then(response=>this.review=response.data);
+
         axios
             .get('http://localhost:44326/api/parkManage/GetParksById', {params: this.$route.params})
             .then(response=>this.park=response.data);
+
+        axios
+            .get('http://localhost:44326/api/userManage/RoleGet', {params: params})
+            .then(response => this.userRole = response.data)
+            .catch(error => this.statusCode = error.response.status)
     }
 }
 </script>

@@ -128,19 +128,25 @@ export default {
 
         parkAdd() {
             let formData = new FormData();
+            let checkbox = checkBoxValue()
+
             formData.append('parkName', this.parkName);
             formData.append('parkCity', this.parkCity);
             formData.append('parkMetro', this.parkMetro);
-            formData.append('parkImages', this.parkImages);
             formData.append('mainText', this.mainText);
             formData.append('enterInfoText', this.enterInfoText);
-            let checkbox = checkBoxValue()
             formData.append('typeId', checkbox);
+            formData.append('parkImages', this.parkImages.name);
 
-            console.log(this.parkCity)
+            const parkName = this.parkName
+
+            console.log(this.parkImages.name)
             console.log(checkbox)
 
-            axios.post('http://localhost:44326/api/adminManage/ParkAdd',formData)
+            axios.post('http://localhost:44326/api/adminManage/ParkAdd', formData)
+                .then(response => response.data)
+                .catch(error => {console.log(error);
+            });
         }
     },
 
