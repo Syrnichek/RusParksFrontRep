@@ -8,11 +8,11 @@
   <div class="el" v-for="parkData in park" :key="parkData.parkid">
     <h1>{{ parkData.parkname }}</h1></div>
   <div v-for="parkData in park" :key="parkData.parkid" class="images">
-    <img class="A" v-bind:src=GetImage(parkData.imagespath[0])>
-    <img class="B" v-bind:src=GetImage(parkData.imagespath[1])>
-    <img class="C" v-bind:src=GetImage(parkData.imagespath[2])>
-    <img class="D" v-bind:src=GetImage(parkData.imagespath[3])>
-    <img class="E" v-bind:src=GetImage(parkData.imagespath[4])>
+    <img class="A" v-bind:src=GetParkImage(parkData.imagespath[0])>
+    <img class="B" v-bind:src=GetParkImage(parkData.imagespath[1])>
+    <img class="C" v-bind:src=GetParkImage(parkData.imagespath[2])>
+    <img class="D" v-bind:src=GetParkImage(parkData.imagespath[3])>
+    <img class="E" v-bind:src=GetParkImage(parkData.imagespath[4])>
   </div>
   <div class="el">
       <div v-for="parkData in park" :key="parkData.parkid">
@@ -36,6 +36,15 @@
   <div>
     <my-input v-model="reviewText" style="width: 450px;"/>
     <my-button  @click="ReviewAdd()" class="profile">Отзыв</my-button>
+  </div>
+  <div>
+    <div v-for="landMarkData in landMark" :key="landMarkData.landmarkid">
+      <div>
+        <img v-bind:src=GetLandmarkImage(landMarkData.landmarkimage)>
+        Название:{{ landMarkData.landmarkname }}
+        Текст:{{ landMarkData.landmarktext }}
+      </div>
+    </div>
   </div>
   <div class="el">
     <div v-for="reviewData in review" :key="reviewData.reviewId">
@@ -70,6 +79,7 @@ export default {
 
     data(){
         return{
+          landMark:[],
           userRole:null,
           review: [],
           park: [],
@@ -82,8 +92,13 @@ export default {
     },
 
     methods:{
-      GetImage(imageName){
+      GetParkImage(imageName){
         let path = 'http://localhost:44326/StaticFiles/images/' + imageName
+        return path
+      },
+
+      GetLandmarkImage(imageName){
+        let path = 'http://localhost:44326/StaticFiles/images/landmarks/' + imageName
         return path
       },
 
@@ -146,6 +161,10 @@ export default {
             .get(`${apiPath}/api/userManage/RoleGet`, {params: params})
             .then(response => this.userRole = response.data)
             .catch(error => this.statusCode = error.response.status)
+
+        axios
+            .get(`${apiPath}/api/parkManage/GetLandmarksByPark`, {params: this.$route.params})
+            .then(response => this.landMark = response.data)
     }
 }
 </script>
