@@ -7,12 +7,12 @@
   Средняя оценка: {{reviewAverage}}
   <div class="el" v-for="parkData in park" :key="parkData.parkid">
     <h1>{{ parkData.parkname }}</h1></div>
-  <div class="images">
-    <img class="A" src="@/images/smallimages/1.jpg">
-    <img class="B" src="@/images/smallimages/2.jpg">
-    <img class="C" src="@/images/smallimages/1.jpg">
-    <img class="D" src="@/images/smallimages/2.jpg">
-    <img class="E" src="@/images/smallimages/1.jpg">
+  <div v-for="parkData in park" :key="parkData.parkid" class="images">
+    <img class="A" v-bind:src=GetImage(parkData.imagespath[0])>
+    <img class="B" v-bind:src=GetImage(parkData.imagespath[1])>
+    <img class="C" v-bind:src=GetImage(parkData.imagespath[2])>
+    <img class="D" v-bind:src=GetImage(parkData.imagespath[3])>
+    <img class="E" v-bind:src=GetImage(parkData.imagespath[4])>
   </div>
   <div class="el">
       <div v-for="parkData in park" :key="parkData.parkid">
@@ -53,6 +53,7 @@
 import axios from "axios";
 import MyButton from "@/components/UI/MyButton.vue";
 import MyInput from "@/components/UI/MyInput.vue";
+import {apiPath} from "@/paths";
 
 function radioValue() {
   let array = []
@@ -81,6 +82,11 @@ export default {
     },
 
     methods:{
+      GetImage(imageName){
+        let path = 'http://localhost:44326/StaticFiles/images/' + imageName
+        return path
+      },
+
       ReviewAdd(){
         let radioVal = radioValue();
         let params = new URLSearchParams();
@@ -95,7 +101,7 @@ export default {
         params.append("reviewText", this.reviewText);
 
         axios
-            .get('http://localhost:44326/api/reviewManage/ReviewAdd', {params: params})
+            .get(`${apiPath}/api/reviewManage/ReviewAdd`, {params: params})
             .then(response=>this.review=response.data);
 
         location.reload()
@@ -111,7 +117,7 @@ export default {
         params.append("reviewid", reviewId);
 
         axios
-            .get('http://localhost:44326/api/adminManage/ReviewDelete', {params: params})
+            .get(`${apiPath}/api/adminManage/ReviewDelete`, {params: params})
             .then(response=>this.review=response.data);
 
         location.reload()
@@ -125,19 +131,19 @@ export default {
         params.append("userId", this.userId);
 
         axios
-            .get('http://localhost:44326/api/reviewManage/ReviewsGetAverage', {params: this.$route.params})
+            .get(`${apiPath}/api/reviewManage/ReviewsGetAverage`, {params: this.$route.params})
             .then(response=>this.reviewAverage=response.data);
 
         axios
-            .get('http://localhost:44326/api/reviewManage/ReviewsGetByParkId', {params: this.$route.params})
+            .get(`${apiPath}/api/reviewManage/ReviewsGetByParkId`, {params: this.$route.params})
             .then(response=>this.review=response.data);
 
         axios
-            .get('http://localhost:44326/api/parkManage/GetParksById', {params: this.$route.params})
+            .get(`${apiPath}/api/parkManage/GetParksById`, {params: this.$route.params})
             .then(response=>this.park=response.data);
 
         axios
-            .get('http://localhost:44326/api/userManage/RoleGet', {params: params})
+            .get(`${apiPath}/api/userManage/RoleGet`, {params: params})
             .then(response => this.userRole = response.data)
             .catch(error => this.statusCode = error.response.status)
     }

@@ -133,14 +133,12 @@ export default {
             formData.append('parkName', this.parkName);
             formData.append('parkCity', this.parkCity);
             formData.append('parkMetro', this.parkMetro);
+            formData.append('mainImages', this.parkImages);
+            formData.append('imagesPath', this.parkImages.name);
             formData.append('mainText', this.mainText);
             formData.append('enterInfoText', this.enterInfoText);
-            formData.append('typeId', checkbox);
-            formData.append('parkImages', this.parkImages.name);
+            checkbox.forEach(v => formData.append('typeId',v))
 
-            const parkName = this.parkName
-
-            console.log(this.parkImages.name)
             console.log(checkbox)
 
             axios.post('http://localhost:44326/api/adminManage/ParkAdd', formData)

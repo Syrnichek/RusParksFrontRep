@@ -4,7 +4,8 @@
       <news-item
           v-for="newsItem in news"
           :newsItem="newsItem"
-          :key="newsItem.newsid"/>
+          :key="newsItem.newsid"
+      />
     </transition-group>
   </div>
   <h2 v-else>Постов нет</h2>
@@ -19,6 +20,13 @@ export default {
         newsItem: Array,
         required: true,
       }
+  },
+
+  methods:{
+    GetImage(imageName){
+      let path = 'http://localhost:44326/StaticFiles/images/news/' + imageName
+      return path
+    }
   }
 }
 </script>

@@ -2,7 +2,8 @@
   <div>
     <div class="app_btns">
       <my-button @click="$router.push('/')" class="profile">Парки</my-button>
-      <my-button @click="$router.push('/authorisation')" class="profile">Профиль</my-button>
+      <my-button v-if="!userId" @click="$router.push('/authorisation')" class="profile">Профиль</my-button>
+      <my-button v-if="userId" @click="profileExit()" class="profile">Выйти</my-button>
     </div>
     <my-dialog v-model:show="dialogVisible"/>
   </div>
@@ -37,15 +38,22 @@ export default {
   data() {
     return{
       news: [ ],
+      userId:null,
       dialogVisible: false,//для отображения окна
       isPostLoading: false,//для отображения загрузки постов
     }
   },
 
   methods: {
+    profileExit(){
+      localStorage.clear()
+      location.reload()
+    },
   },
 
   mounted() {
+    this.userId = localStorage.getItem("userId")
+
     axios
         .get('http://localhost:44326/api/newsManage/GetNewsAll')
         .then(response=>this.news=response.data);

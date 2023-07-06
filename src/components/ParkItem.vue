@@ -1,7 +1,7 @@
 <template>
   <div class="post">
     <div class="el">
-      <img @click="$router.push(`/park/${park.parkid}`)" src="@/images/smallimages/1.jpg">
+      <img @click="$router.push(`/park/${park.parkid}`)" v-bind:src=GetImage(park.smallimage)>
       <div class="maintext"><strong>{{ park.parkname}}</strong></div>
       <div>Город: {{ park.parkcity }}</div>
       <div>Метро: {{ park.parkmetro }}</div>
@@ -20,6 +20,13 @@ export default
       park:{
         type: Object,
         required: true
+      }
+    },
+
+    methods:{
+      GetImage(imageName){
+        let path = 'http://localhost:44326/StaticFiles/images/small/' + imageName
+        return path
       }
     }
 }

@@ -1,9 +1,12 @@
 <template>
   <div class="post">
     <div class="el">
-      <img @click="$router.push(`/news/${news.newsid}`)" src="@/images/smallimages/1.jpg">
+      <img @click="$router.push(`/news/${newsItem.newsid}`)" v-bind:src=GetImage(newsItem.newsimage)>
       <div class="maintext"><strong>{{ newsItem.newstitle}}</strong></div>
-      <div>{{ newsItem.newsdate }}</div>
+      <div>
+        {{ newsItem.newsdate.slice(0,10) }}
+        {{ newsItem.newsdate.slice(11,19) }}
+      </div>
     </div>
   </div>
 
@@ -14,10 +17,18 @@ import MyButton from "@/components/UI/MyButton.vue";
 
 export default {
   components: {MyButton},
+
   props:{
       newsItem:{
         type: Object,
         required: true
+    }
+  },
+
+  methods:{
+    GetImage(imageName){
+      let path = 'http://localhost:44326/StaticFiles/images/news/' + imageName
+      return path
     }
   }
 }
