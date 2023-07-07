@@ -41,7 +41,7 @@ export default
   flex-direction: row;
   justify-content: flex-start;
   grid-template-columns: repeat(6,1fr);
-  width: 200px;
+  width: 320px;
   border:1px black;
   margin-left: auto;
   margin-right: auto;
@@ -49,15 +49,17 @@ export default
   cursor: pointer;
 }
 .el{
+  align-self: center;
+  justify-self: center;
   align-content: start;
-  width: 200px;
+  width: 320px;
   align-items: center;
-  font-family: "Century Gothic";
+  font-family: "Century Gothic",serif;
   font-size: 16px;
   margin-top: 20px;
 }
 img{
-  width: 200px;
+  width: 320px;
   height: 220px;
   border-radius: 15px;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="parks.length>0">
+  <div class="el" v-if="parks.length>0">
     <transition-group name="post-list">
       <park-item
           v-for="park in parks"
@@ -24,6 +24,9 @@ export default {
 </script>
 
 <style scoped>
+.el{
+  margin-left: 40px;
+}
 .post-list{
   display: inline;
   margin-right: 10px;

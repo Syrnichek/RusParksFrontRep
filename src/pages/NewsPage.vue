@@ -4,7 +4,7 @@
     <div class="app_btns">
       <my-button @click="$router.push('/')" class="profile">Парки</my-button>
       <my-button v-if="!userId" @click="$router.push('/authorisation')" class="profile">Профиль</my-button>
-      <my-button v-if="userId" @click="profileExit()" class="profile">Выйти</my-button>
+      <my-button v-if="userId" @click="profileExit()" class="profile">{{ userLogin }}</my-button>
     </div>
 
     <my-button v-if="userRole==='Admin'" @click="showModal=true" class="profile" style="float:right; ">Добавить новость</my-button>
@@ -53,6 +53,7 @@ export default {
       userRole:'',
       dialogVisible: false,//для отображения окна
       isPostLoading: false,//для отображения загрузки постов
+      userLogin:null,
     }
   },
 
@@ -65,6 +66,7 @@ export default {
 
   mounted() {
     this.userId = localStorage.getItem("userId")
+    this.userLogin = localStorage.getItem("userLogin")
 
     let params = new URLSearchParams();
     params.append("userId", this.userId);

@@ -1,6 +1,6 @@
 <template>
   <select :value="selectedCity" @change="GetParksByCity">
-    <option disabled value="Город">Город</option>
+    <option disabled value="">Город</option>
     <option value="Москва">Москва</option>
     <option value="Санкт-Петербург">Санкт-Петербург</option>
     <option value="Сочи">Сочи</option>
@@ -42,7 +42,7 @@ select{
   width: 200px;
   border-radius: 15px;
   border: 0px;
-  font-family: "Century Gothic";
+  font-family: "Century Gothic",serif;
   font-size: 20px;
   color: black;
   cursor: pointer;

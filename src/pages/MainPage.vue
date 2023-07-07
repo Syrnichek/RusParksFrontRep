@@ -1,11 +1,11 @@
 <template>
   <div>
-    Добрый день {{userLogin}}
-
     <div class="app_btns">
       <my-select @onChangeParkCity="selectedParkCity=$event"/>
       <my-button v-if="!userId" @click="$router.push('/authorisation')" class="profile">Профиль</my-button>
-      <my-button v-if="userId" @click="profileExit()" class="profile">Выйти</my-button>
+
+      <my-button v-if="userId" @click="profileExit()" class="profile">{{userLogin}}</my-button>
+
     </div>
 
     <my-button v-if="userRole==='Admin'" @click="showModal=true" class="profile" style="float:right; ">Добавить парк</my-button>

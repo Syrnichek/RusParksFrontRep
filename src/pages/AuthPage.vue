@@ -12,8 +12,8 @@
       <div v-if="statusCode==401">
           Не верный логин/пароль
       </div>
-    <my-button @click="UserLogin()" style="width: 240px; color: white; margin-right: auto; margin-left: auto;margin-top: 60px; font-size:24px">ВОЙТИ</my-button>
-    <div @click="$router.push('/registration')" style="margin-top: 10px">РЕГИСТРАЦИЯ</div>
+    <my-button @click="UserLogin()" style="width: 240px; color: white; margin-right: auto; margin-left: auto;margin-top: 60px; font-size:24px; cursor: pointer">ВОЙТИ</my-button>
+    <div @click="$router.push('/registration')" style="margin-top: 10px; cursor: pointer">РЕГИСТРАЦИЯ</div>
   </div>
 </template>
 

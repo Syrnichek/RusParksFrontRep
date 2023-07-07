@@ -19,7 +19,7 @@
     <div v-else-if="statusCode==400">
       Введите корректные данные
     </div>
-    <my-button @click="UserReg()" style="width: 340px; color: white; margin-right: auto; margin-left: auto;margin-top: 60px; font-size:24px">Зарегистрироваться</my-button>
+    <my-button @click="UserReg()" style="width: 340px; color: white; margin-right: auto; margin-left: auto;margin-top: 60px; font-size:24px; cursor: pointer">Зарегистрироваться</my-button>
   </div>
 </template>
 

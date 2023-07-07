@@ -2,9 +2,8 @@
   <div class="app_btns">
     <my-button @click="$router.push('/')" class="profile">Парки</my-button>
     <my-button v-if="!userId" @click="$router.push('/authorisation')" class="profile">Профиль</my-button>
-    <my-button v-if="userId" @click="profileExit()" class="profile">Выйти</my-button>
+    <my-button v-if="userId" @click="profileExit()" class="profile">{{userLogin}}</my-button>
   </div>
-  Средняя оценка: {{reviewAverage}}
   <div class="el" v-for="parkData in park" :key="parkData.parkid">
     <h1>{{ parkData.parkname }}</h1></div>
   <div v-for="parkData in park" :key="parkData.parkid" class="images">
@@ -16,43 +15,45 @@
   </div>
   <div class="el">
       <div v-for="parkData in park" :key="parkData.parkid">
-          <strong>{{ parkData.parkname }}</strong>
-          <div>{{ parkData.maintext }}</div>
-          <div>{{ parkData.enterinfotext}}</div>
+          <div class="text">{{ parkData.maintext }}</div>
+          <div class="text">{{ parkData.enterinfotext}}</div>
       </div>
-  </div>
-  <div class="rating-area">
-    <input type="radio" id="star-5" name="rating" value="5">
-    <label for="star-5" title="Оценка «5»"></label>
-    <input type="radio" id="star-4" name="rating" value="4">
-    <label for="star-4" title="Оценка «4»"></label>
-    <input type="radio" id="star-3" name="rating" value="3">
-    <label for="star-3" title="Оценка «3»"></label>
-    <input type="radio" id="star-2" name="rating" value="2">
-    <label for="star-2" title="Оценка «2»"></label>
-    <input type="radio" id="star-1" name="rating" value="1">
-    <label for="star-1" title="Оценка «1»"></label>
-  </div>
-  <div>
-    <my-input v-model="reviewText" style="width: 450px;"/>
-    <my-button  @click="ReviewAdd()" class="profile">Отзыв</my-button>
-  </div>
-  <div>
-    <div v-for="landMarkData in landMark" :key="landMarkData.landmarkid">
-      <div>
-        <img v-bind:src=GetLandmarkImage(landMarkData.landmarkimage)>
-        Название:{{ landMarkData.landmarkname }}
-        Текст:{{ landMarkData.landmarktext }}
-      </div>
+    <div style="margin-top: 36px">Средняя оценка: {{reviewAverage}}</div>
+
+    <div class="rating-area">
+      <input type="radio" id="star-5" name="rating" value="5">
+      <label for="star-5" title="Оценка «5»"></label>
+      <input type="radio" id="star-4" name="rating" value="4">
+      <label for="star-4" title="Оценка «4»"></label>
+      <input type="radio" id="star-3" name="rating" value="3">
+      <label for="star-3" title="Оценка «3»"></label>
+      <input type="radio" id="star-2" name="rating" value="2">
+      <label for="star-2" title="Оценка «2»"></label>
+      <input type="radio" id="star-1" name="rating" value="1">
+      <label for="star-1" title="Оценка «1»"></label>
     </div>
-  </div>
-  <div class="el">
+    <div>
+      <my-input class="input" v-model="reviewText"/>
+      <my-button style="height: 50px"  @click="ReviewAdd()" class="profile">Отправить</my-button>
+    </div>
     <div v-for="reviewData in review" :key="reviewData.reviewId">
-      <div>
-        Имя пользователя:{{ reviewData.userlogin }}
-        Комментарий:{{ reviewData.reviewtext }}
+      <div class="reviewshow">
+        <div style="font-weight: bold;">{{ reviewData.userlogin }}</div>
+        {{ reviewData.reviewtext }}
         Оценка:{{ reviewData.reviewscore }}
         <my-button v-if="userRole==='Admin'" @click="ReviewDelete(reviewData.reviewid)" class="profile">Удалить</my-button>
+      </div>
+    </div>
+    <div>
+      <div><h1>Достопримечательности парка</h1></div>
+      <div v-for="landMarkData in landMark" :key="landMarkData.landmarkid">
+        <h2  style="margin-top: 32px">{{ landMarkData.landmarkname }}</h2>
+          <div>
+          <img class="lanmarkimage" v-bind:src=GetLandmarkImage(landMarkData.landmarkimage)>
+          <div>
+            <div class="text">{{ landMarkData.landmarktext }}</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -88,6 +89,10 @@ export default {
           reviewText:'',
           dialogVisible: false,
           isPostLoading: false,
+          userLogin:null,
+          selectedParkId: null,
+          selectedParkCity: null,
+          parks: [ ],
         }
     },
 
@@ -141,6 +146,7 @@ export default {
 
     mounted() {
         this.userId = localStorage.getItem("userId")
+      this.userLogin = localStorage.getItem("userLogin")
 
         let params = new URLSearchParams();
         params.append("userId", this.userId);
@@ -175,11 +181,34 @@ export default {
   align-content: start;
   width: 1300px;
   align-items: center;
-  font-family: "Century Gothic";
-  font-size: 14px;
+  font-family: "Century Gothic",serif;
+  font-size: 16px;
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
+}
+.lanmarkimage{
+  width: 800px;
+  height: auto;
+  border-radius: 15px;
+}
+.text{
+  text-indent: 25px;
+  margin-top: 20px;
+  text-align: justify;
+}
+.input{
+  width: 450px;
+  margin-right: 20px;
+  width: 1000px;
+}
+.reviewshow{
+  margin-top: 20px;
+  margin-bottom: 36px;
+  border: 1px black solid;
+  border-radius: 10px;
+  padding-left: 10px;
+  width: 1000px;
 }
 img{
   border-radius: 15px;
@@ -223,7 +252,9 @@ img{
   justify-content: space-between;
   margin: 15px 0;
 }
-
+h1{
+  font-family: "Century Gothic",serif;
+}
 .profile{
   margin: 0;
   font-size: 20px;
@@ -237,12 +268,15 @@ strong{
   overflow: hidden;
   width: 1300px;
   margin: 20px auto;
+  justify-content: left;
 }
 .rating-area:not(:checked) > input {
   display: none;
+  justify-content: left;
 }
 .rating-area:not(:checked) > label {
-  justify-content: center;
+  float: left;
+  justify-content: left;
   width: 70px;
   padding: 5px;
   cursor: pointer;
